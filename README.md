@@ -36,7 +36,7 @@ Install dependencies:
 $ pip install -r requirements.txt
 ```
 
-###Run App
+### Run App
 
 Ensure that your instance of mariadb is running
 
