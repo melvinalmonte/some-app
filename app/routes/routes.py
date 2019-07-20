@@ -7,7 +7,7 @@ users = Blueprint('users', __name__)
 
 @users.route("/")
 def index():
-    return "Home Page"
+    return "Welcome User!"
 
 
 @users.route("/users", methods=["POST"])
@@ -38,3 +38,32 @@ def get_all_users():
         output.append(user_data)
 
     return jsonify({"users": output})
+
+
+@users.route("/users/<public_id>", methods=["GET"])
+def get_single_user(public_id):
+
+    user = Users.query.filter_by(public_id=public_id).first()
+
+    if not user:
+        return jsonify({"message": "User Not Found"})
+    else:
+        user_data = {
+            "public_id": user.public_id,
+            "first_name": user.first_name,
+            "Last_name" : user.last_name
+        }
+
+    return jsonify({"user": user_data})
+
+
+@users.route("/users/<public_id>", methods=["DELETE"])
+def delete_single_user(public_id):
+    user = Users.query.filter_by(public_id=public_id).first()
+
+    if not user:
+        return jsonify({"message": "User Not Found"})
+    else:
+        db.session.delete(user)
+        db.session.commit()
+    return jsonify({"message": "User has been deleted"})
