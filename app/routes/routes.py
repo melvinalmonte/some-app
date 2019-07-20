@@ -40,7 +40,7 @@ def get_all_users():
     return jsonify({"users": output})
 
 
-@users.route("/user/<public_id>", methods=["GET"])
+@users.route("/users/<public_id>", methods=["GET"])
 def get_single_user(public_id):
 
     user = Users.query.filter_by(public_id=public_id).first()
@@ -57,7 +57,7 @@ def get_single_user(public_id):
     return jsonify({"user": user_data})
 
 
-@users.route("/user/<public_id>", methods=["DELETE"])
+@users.route("/users/<public_id>", methods=["DELETE"])
 def delete_single_user(public_id):
     user = Users.query.filter_by(public_id=public_id).first()
 
