@@ -1,0 +1,31 @@
+version: "3.2"
+
+services: 
+    some-mariadb:
+        container_name: some-mariadb
+        ports: 
+            - "3306:3306"
+        image: mariadb:latest
+        environment: 
+            - MYSQL_ROOT_PASSWORD=test123
+            - MYSQL_DATABASE=some-db
+        networks: 
+            - my-net
+    some-app:
+        container_name: some-app
+        ports: 
+            - "5000:5000"
+        image: some-app:latest
+        environment: 
+            - MYSQL_USER=root
+            - MYSQL_PASSWORD=test123
+            - MYSQL_HOST=some-mariadb
+            - MYSQL_PORT=3306
+            - DATABASE=some-db
+        depends_on: 
+            - some-mariadb
+        networks: 
+            - my-net
+networks: 
+    my-net:
+        driver: bridge
